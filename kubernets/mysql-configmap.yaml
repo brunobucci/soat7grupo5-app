@@ -1,0 +1,253 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_DATABASE: "soat7grupo5"
+  MYSQL_PASSWORD: "soat7grupo5"
+  init.sql: |
+    CREATE USER 'soat7grupo5'@'%' IDENTIFIED BY 'soat7grupo5';
+    GRANT ALL PRIVILEGES ON *.* TO 'soat7grupo5'@'%';
+
+    USE soat7grupo5;
+
+    --
+    -- Banco de dados: `soat7grupo5`
+    --
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `cliente`
+    --
+
+    DROP TABLE IF EXISTS `cliente`;
+    CREATE TABLE IF NOT EXISTS `cliente` (
+      `id_cliente` int NOT NULL AUTO_INCREMENT,
+      `Nome` varchar(255) CHARACTER SET ucs2 COLLATE ucs2_general_ci DEFAULT NULL,
+      `Email` varchar(255) DEFAULT NULL,
+      `cpf` varchar(11) CHARACTER SET ucs2 COLLATE ucs2_general_ci NOT NULL,
+      `id_campanha` int NOT NULL DEFAULT '0',
+      PRIMARY KEY (`id_cliente`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=103 DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `cliente`
+    --
+
+    INSERT INTO `cliente` (`id_cliente`, `Nome`, `Email`, `cpf`, `id_campanha`) VALUES
+    (1, 'Marcelo Nome Completo', 'marcelo-email@email.com.br', '34133413831', 2),
+    (2, 'Bruno BBX', 'brunobbx@bbx.com', '31542963855', 1),
+    (52, 'Mayara Damasio', 'mayarad@gmail.com', '12345678910', 2),
+    (102, 'Teste Teste', 'teste@teste.com', '1234567910', 10);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `cliente_seq`
+    --
+
+    DROP TABLE IF EXISTS `cliente_seq`;
+    CREATE TABLE IF NOT EXISTS `cliente_seq` (
+      `next_val` bigint DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `cliente_seq`
+    --
+
+    INSERT INTO `cliente_seq` (`next_val`) VALUES
+    (201);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `pedido`
+    --
+
+    DROP TABLE IF EXISTS `pedido`;
+    CREATE TABLE IF NOT EXISTS `pedido` (
+      `id_pedido` int NOT NULL,
+      `id_cliente` int DEFAULT NULL,
+      `id_status_pedido` int DEFAULT NULL,
+      `id_tipo_pagamento` int DEFAULT '1',
+      `preco` double DEFAULT NULL,
+      `duracao_total_preparo` int NOT NULL,
+      `data_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `id_status_pagamento` int NOT NULL DEFAULT '0',
+      PRIMARY KEY (`id_pedido`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `pedido`
+    --
+
+    INSERT INTO `pedido` (`id_pedido`, `id_cliente`, `id_status_pedido`, `id_tipo_pagamento`, `preco`, `duracao_total_preparo`, `data_criacao`, `id_status_pagamento`) VALUES
+    (452, 1, 3, 1, 45, 15, '2024-05-27 23:24:00', 2),
+    (402, 2, 2, 1, 37, 22, '2024-05-21 21:03:22', 1),
+    (502, 1, 3, 1, 33, 19, '2024-07-29 19:12:33', 0),
+    (553, 1, 0, 0, 21, 12, '2024-07-29 21:12:33', 0),
+    (554, 1, 0, 0, 11, 7, '2024-07-25 21:12:33', 1),
+    (555, 1, 0, 1, 10, 5, '2024-07-19 19:12:33', 0);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `pedido_produto`
+    --
+
+    DROP TABLE IF EXISTS `pedido_produto`;
+    CREATE TABLE IF NOT EXISTS `pedido_produto` (
+      `id_pedido_produto` int NOT NULL AUTO_INCREMENT,
+      `id_pedido` int NOT NULL,
+      `id_produto` int NOT NULL,
+      `preco_produto` double DEFAULT NULL,
+      `nome_produto` varchar(50) NOT NULL,
+      `duracao_preparo` int NOT NULL,
+      PRIMARY KEY (`id_pedido_produto`),
+      KEY `FK1sojgctn8vt21b1tbuaou288m` (`id_pedido`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=256 DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `pedido_produto`
+    --
+
+    INSERT INTO `pedido_produto` (`id_pedido_produto`, `id_pedido`, `id_produto`, `preco_produto`, `nome_produto`, `duracao_preparo`) VALUES
+    (103, 402, 3, 12, 'Suco de laranja', 7),
+    (102, 402, 1, 10, 'Misto quente', 15),
+    (104, 402, 5, 15, 'Sorvete', 0),
+    (152, 452, 2, 8, 'Queijo quente', 3),
+    (153, 452, 52, 10, 'Fritas', 5),
+    (154, 452, 3, 12, 'Suco de laranja', 7),
+    (155, 452, 5, 15, 'Sorvete', 0),
+    (202, 502, 6, 11, 'Cheese Burger', 7),
+    (203, 502, 102, 10, 'Fritas', 5),
+    (204, 502, 3, 12, 'Suco de laranja', 7),
+    (252, 553, 6, 11, 'Cheese Burger', 7),
+    (253, 553, 102, 10, 'Fritas', 5),
+    (254, 554, 6, 11, 'Cheese Burger', 7),
+    (255, 555, 102, 10, 'Fritas', 5);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `pedido_produto_seq`
+    --
+
+    DROP TABLE IF EXISTS `pedido_produto_seq`;
+    CREATE TABLE IF NOT EXISTS `pedido_produto_seq` (
+      `next_val` bigint DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `pedido_produto_seq`
+    --
+
+    INSERT INTO `pedido_produto_seq` (`next_val`) VALUES
+    (351);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `pedido_seq`
+    --
+
+    DROP TABLE IF EXISTS `pedido_seq`;
+    CREATE TABLE IF NOT EXISTS `pedido_seq` (
+      `next_val` bigint DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `pedido_seq`
+    --
+
+    INSERT INTO `pedido_seq` (`next_val`) VALUES
+    (651);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `pedido_status`
+    --
+
+    DROP TABLE IF EXISTS `pedido_status`;
+    CREATE TABLE IF NOT EXISTS `pedido_status` (
+      `ID_pedido_status` int NOT NULL,
+      `nome` varchar(255) NOT NULL,
+      PRIMARY KEY (`ID_pedido_status`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=ucs2;
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `produto`
+    --
+
+    DROP TABLE IF EXISTS `produto`;
+    CREATE TABLE IF NOT EXISTS `produto` (
+      `ID_Produto` int NOT NULL AUTO_INCREMENT,
+      `Nome` varchar(255) NOT NULL,
+      `Descricao` varchar(255) DEFAULT NULL,
+      `preco` double DEFAULT NULL,
+      `duracao_preparo` int DEFAULT NULL,
+      `id_tipo` int DEFAULT NULL,
+      `fl_ativo` int NOT NULL DEFAULT '1',
+      PRIMARY KEY (`ID_Produto`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `produto`
+    --
+
+    INSERT INTO `produto` (`ID_Produto`, `Nome`, `Descricao`, `preco`, `duracao_preparo`, `id_tipo`, `fl_ativo`) VALUES
+    (1, 'Misto quente', 'Pão francês com presunto e queijo na chapa.', 10, 25, 1, 1),
+    (3, 'Suco de laranja', 'Suco de laranja 500ml.', 12, 7, 3, 1),
+    (4, 'Coca-cola', 'Refrigerante Coca-cola lata 350ml.', 8, 0, 3, 1),
+    (5, 'Sorvete', 'Picolé Tablito.', 15, 0, 4, 1),
+    (6, 'Cheese Burger', 'Pão de hambúrguer, carne e queijo.', 11, 7, 1, 1),
+    (52, 'Coxinha', 'Salgado recheado com frango desfiado', 10, 3, 1, 0),
+    (102, 'Fritas', 'Batata frita média', 10, 5, 2, 1),
+    (152, 'Hamburger', 'Pão de hamburguer com carne.', 8, 5, 1, 1);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `produto_seq`
+    --
+
+    DROP TABLE IF EXISTS `produto_seq`;
+    CREATE TABLE IF NOT EXISTS `produto_seq` (
+      `next_val` bigint DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `produto_seq`
+    --
+
+    INSERT INTO `produto_seq` (`next_val`) VALUES
+    (251);
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estrutura da tabela `produto_tipo`
+    --
+
+    DROP TABLE IF EXISTS `produto_tipo`;
+    CREATE TABLE IF NOT EXISTS `produto_tipo` (
+      `ID_produto_tipo` int NOT NULL,
+      `nome` varchar(255) NOT NULL,
+      PRIMARY KEY (`ID_produto_tipo`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=ucs2;
+
+    --
+    -- Extraindo dados da tabela `produto_tipo`
+    --
+
+    INSERT INTO `produto_tipo` (`ID_produto_tipo`, `nome`) VALUES
+    (1, 'Lanche'),
+    (2, 'Acompanhamento'),
+    (3, 'Bebida'),
+    (4, 'Sobremesa');
+    COMMIT;
