@@ -10,7 +10,7 @@ on:
 
 jobs:
   BUILD_IMAGE_ECR:
-    uses: ./.github/workflows/image_ecr.yml
+    uses: ./.github/workflows/image-ecr.yml
     secrets: inherit
 
   Deploy_EKS:
