@@ -7,10 +7,10 @@ jobs:
   EKS:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
     
     - name: Configurando credenciais da AWS
-      uses: aws-actions/configure-aws-credentials@v3
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -22,7 +22,7 @@ jobs:
       run: aws configure list
            
     - name: HashiCorp - Setup Terraform
-      uses: hashicorp/setup-terraform@v3
+      uses: hashicorp/setup-terraform@v1
  
     - name: Terraform Init
       run: terraform -chdir=soat7grupo5-infra/env/prod init 
