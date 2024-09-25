@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: configurando credenciais da AWS
+    - name: Configurando credenciais da AWS
       uses: aws-actions/configure-aws-credentials@v3
       with:
         aws-access-key-id: ${{ secrets.AWS_KEY }}
