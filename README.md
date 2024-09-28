@@ -1,6 +1,6 @@
 # Tech Challenge Pos Tech SOAT7GRUPO5 - Fase 3
 
-### Link vídeo detalhando
+### Link vídeo detalhando o
 
 
 # Tech Challenge Pos Tech SOAT7GRUPO5 - Fase 2
