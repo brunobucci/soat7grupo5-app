@@ -8,9 +8,9 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
 
 RUN apt install -y git && apt install -y maven && apt install -y openjdk-21-jdk
 
-RUN git clone https://github.com/brunobucci/soat7grupo5.git
+RUN git clone https://github.com/brunobucci/soat7grupo5-app.git
 
-WORKDIR /usr/local/soat7grupo5
+WORKDIR /usr/local/soat7grupo5-app
 
 RUN git pull
 
@@ -18,7 +18,7 @@ RUN rm -rf target
 
 RUN mvn clean install package
 
-WORKDIR /usr/local/soat7grupo5/target/
+WORKDIR /usr/local/soat7grupo5-app/target/
 
 # Expose the port the app runs in
 EXPOSE 8080
