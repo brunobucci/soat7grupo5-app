@@ -30,9 +30,6 @@ jobs:
     - name: Terraform Validate
       run: terraform -chdir=soat7grupo5-infra/env/prod validate
 
-    - name: LS
-      run: ls
-
     - name: Terraform Apply
       run: terraform -chdir=soat7grupo5-infra/env/prod apply -auto-approve 
   
@@ -42,7 +39,7 @@ jobs:
     - name: Verificando identidade da AWS
       run: aws sts get-caller-identity
     
-    - run: aws eks update-kubeconfig --region us-east-1 --name ${{ vars.AWS_EKS_CLUSTER_NAME }}
+    - run: aws eks update-kubeconfig --region ${{ vars.AWS_REGION }} --name ${{ vars.AWS_EKS_CLUSTER_NAME }}
 
     - name: Verificando configuração do kubeconfig
       run: cat ~/.kube/config
