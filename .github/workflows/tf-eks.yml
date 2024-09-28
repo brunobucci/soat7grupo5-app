@@ -39,23 +39,19 @@ jobs:
     - name: Kubectl tool installer
       uses: Azure/setup-kubectl@v3
       
-    - run: aws sts get-caller-identity
+    - name: Verificando identidade da AWS
+      run: aws sts get-caller-identity
     
     - run: aws eks update-kubeconfig --region us-east-1 --name ${{ vars.AWS_EKS_CLUSTER_NAME }}
 
     - name: Verificando configuração do kubeconfig
       run: cat ~/.kube/config
-
-    - name: Verificando identidade da AWS
-      run: aws sts get-caller-identity
-
+      
     - name: Verificando configuração do kubectl
       run: kubectl config view
 
     - name: Autenticação baseada no comando get-token
       run: aws eks get-token --cluster-name ${{ vars.AWS_EKS_CLUSTER_NAME }} --region us-east-1
-
-    - run: kubectl get svc
 
     - name: Criando configMap da APP
       run: kubectl apply -f soat7grupo5-infra/kubernets/api-configmap.yaml
@@ -65,9 +61,6 @@ jobs:
 
     - name: Criando SVC da APP
       run: kubectl apply -f soat7grupo5-infra/kubernets/api-svc.yaml
-
-    - name: Criando Metric da APP
-      run: kubectl apply -f soat7grupo5-infra/kubernets/component-metric.yaml
 
     - name: Criando HPA  da APP
       run: kubectl apply -f soat7grupo5-infra/kubernets/api-hpa.yaml
