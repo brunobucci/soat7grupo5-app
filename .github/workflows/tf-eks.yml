@@ -54,14 +54,6 @@ jobs:
     - name: Autenticação baseada no comando get-token
       run: aws eks get-token --cluster-name ${{ vars.AWS_EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
 
-    - name: Deploy to EKS
-      run: |
-        kubectl apply -f deployment/deploy.yaml 
-        kubectl apply -f deployment/pod_service.yaml 
-        kubectl apply -f deployment/hpa.yaml 
-        kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
-
     - name: Criando configMap da aplicação
       run: kubectl apply -f soat7grupo5-infra/kubernets/api-configmap.yaml
 
