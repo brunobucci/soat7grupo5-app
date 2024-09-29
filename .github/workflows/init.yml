@@ -6,11 +6,6 @@ on:
       - main
 
 jobs:
-  Build_ECR:
-    uses: ./.github/workflows/image-ecr.yml
-    secrets: inherit
-
   Deploy_EKS:
      uses: ./.github/workflows/tf-eks.yml
      secrets: inherit
-     needs: Build_ECR
