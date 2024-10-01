@@ -23,7 +23,7 @@ jobs:
       run: aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ vars.AWS_ECR_URL }} 
 
     - name: Build Docker image
-      run: docker build . -t  ${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_VERSION }}
+      run: docker build . -t  ${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_VERSION }} --no-cache
 
     - name: Tag Docker image
       run: docker tag ${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_VERSION }} ${{ vars.AWS_ECR_URL }}/${{ vars.AWS_ECR_REPOSITORY_NAME }}:${{ vars.DOCKER_IMAGE_VERSION }}
